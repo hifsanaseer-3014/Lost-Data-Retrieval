@@ -7,7 +7,7 @@ This project is a **low-level** forensic utility designed to recover deleted dat
 When a file is "deleted" in Windows, the actual data remains on the disk; only the reference to it is removed. This tool scans the raw binary sectors to find "Magic Numbers"—unique signatures that identify specific file types.
 
 ### **How it Works**
-* **Binary Stream Access:** The script opens the physical drive as a raw device (`\\.\C:`).
+* **Binary Stream Access:** The script opens the physical drive as a raw device (e.g., `\\.\C:`).
 * **Signature Detection:** It monitors the stream for the JPG Start-of-Image (SOI) marker: `\xff\xd8\xff\xe0`.
 * **Extraction:** Once a header is found, it "carves" the data into a new file until it hits the End-of-Image (EOI) marker: `\xff\xd9`.
 
@@ -27,7 +27,17 @@ The tool utilizes a persistent `while byte:` loop. This ensures the script maint
 ---
 
 ## **How to Run**
-1. Open **Command Prompt** as an **Administrator**.
-2. Run the script:
+
+### **1. Administrative Privileges**
+You **must** run your Command Prompt as an **Administrator**. Windows blocks raw disk access for standard users to protect the integrity of the hardware.
+
+### **2. Execute with Python Path**
+If Python is not added to your system's Environment Variables (PATH), you must provide the **full path** to your `python.exe` in the terminal.
+
+**Example Command:**
 ```bash
-python dataretrieval.py
+# Replace the path below with the actual location of your python.exe
+C:\Path\To\Python\python.exe dataretrieval.py
+````
+3. Configure Output Directory
+Before execution, ensure you have updated the output path in the script to a valid directory on your system where the recovered .jpg files should be saved.
